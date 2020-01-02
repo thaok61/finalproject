@@ -23,16 +23,16 @@
 					<td><form:label path="idOrder">
 							<spring:message text="ID" />
 						</form:label></td>
-					<td><form:input path="idOrder" readonly="true"
-							size="200" disabled="true" /> <form:hidden path="idOrder" />
-					</td>
+					<td><form:input path="idOrder" readonly="true" size="20"
+							disabled="true" /> <form:hidden path="idOrder" /></td>
 				</tr>
 			</c:if>
 			<tr>
 				<td><form:label path="totalMoney">
 						<spring:message text="Total Money" />
 					</form:label></td>
-				<td><form:input path="totalMoney" /></td>
+				<td><form:input path="totalMoney" readonly="true" size="20"
+						disabled="true" /></td>
 				<td><form:errors path="totalMoney" /></td>
 			</tr>
 			<tr>
@@ -47,11 +47,9 @@
 			</tr>
 			<tr>
 				<td colspan="2"><c:if test="${!empty order.totalMoney}">
-						<input type="submit"
-							value="<spring:message text="Edit Order "/>" />
+						<input type="submit" value="<spring:message text="Edit Order "/>" />
 					</c:if> <c:if test="${empty order.totalMoney}">
-						<input type="submit"
-							value="<spring:message text="Add Order "/>" />
+						<input type="submit" value="<spring:message text="Add Order "/>" />
 					</c:if></td>
 			</tr>
 		</table>
@@ -70,16 +68,14 @@
 			<c:forEach items="${listOrders}" var="order">
 				<tr>
 					<td>${order.idOrder}</td>
-					<td>${order.nameOrder}</td>
-					<td>
-				<c:forEach items="${customersList }"  var="customer">
-					<c:if test="${customer.idCustomer eq order.idCustomer}"> <c:out value="${country.countryName }"></c:out> </c:if>
-				</c:forEach> 
-			</td>
-					<td><a
-						href="<c:url value='order/edit/${order.idOrder}' />">Edit</a></td>
-					<td><a
-						href="<c:url value='order/remove/${order.idOrder}' />"
+					<td><c:forEach items="${customersList }" var="customer">
+							<c:if test="${customer.idCustomer eq order.idCustomer}">
+								<c:out value="${customer.nameCustomer }"></c:out>
+							</c:if>
+						</c:forEach></td>
+					<td>${order.totalMoney}</td>
+					<td><a href="<c:url value='order/edit/${order.idOrder}' />">Edit</a></td>
+					<td><a href="<c:url value='order/remove/${order.idOrder}' />"
 						onclick="return confirm('Do you want delete this record ?')">Delete</a></td>
 				</tr>
 			</c:forEach>

@@ -18,7 +18,7 @@
 
 	<form:form action="${addAction}" commandName="orderDetail">
 		<table>
-			<c:if test="${!empty orderDetail.quantity}">
+			<c:if test="${!empty orderDetail.idOrderDetail}">
 				<tr>
 					<td><form:label path="idOrderDetail">
 							<spring:message text="ID" />
@@ -41,9 +41,9 @@
 					</form:label></td>
 				<td><form:select path="idOrder">
 						<form:options items="${ordersList}" itemValue="idOrder"
-							itemLabel="nameProduct" />
+							itemLabel="idOrder" />
 					</form:select></td>
-				<td><form:errors path="idProduct" /></td>
+				<td><form:errors path="idOrder" /></td>
 			</tr>
 			<tr>
 				<td><form:label path="idProduct">
@@ -56,10 +56,11 @@
 				<td><form:errors path="idProduct" /></td>
 			</tr>
 			<tr>
-				<td colspan="2"><c:if test="${!empty orderDetail.quantity}">
+				<td colspan="2"><c:if
+						test="${!empty orderDetail.idOrderDetail}">
 						<input type="submit"
 							value="<spring:message text="Edit Order Detail"/>" />
-					</c:if> <c:if test="${empty orderDetail.quantity}">
+					</c:if> <c:if test="${empty orderDetail.idOrderDetail}">
 						<input type="submit"
 							value="<spring:message text="Add Order Detail"/>" />
 					</c:if></td>
@@ -68,18 +69,26 @@
 	</form:form>
 	<br>
 	<h3>Order List</h3>
-	<c:if test="${!empty listOrders}">
+	<c:if test="${!empty listOrderDetails}">
 		<table class="tg">
 			<tr>
-				<th width="80">OrderDetail ID</th>
-				<th width="150">OrderDetail Name</th>
+				<th width="80">Order Detail ID</th>
+				<th width="150">Order ID</th>
+				<th width="150">Product</th>
+				<th width="150">Quantity</th>
 				<th width="60">Edit</th>
 				<th width="60">Delete</th>
 			</tr>
-			<c:forEach items="${listOrders}" var="orderDetail">
+			<c:forEach items="${listOrderDetails}" var="orderDetail">
 				<tr>
 					<td>${orderDetail.idOrderDetail}</td>
-					<td>${orderDetail.nameOrderDetail}</td>
+					<td>${orderDetail.idOrder}</td>
+					<td><c:forEach items="${productsList }" var="product">
+							<c:if test="${product.idProduct eq orderDetail.idProduct}">
+								<c:out value="${product.nameProduct }"></c:out>
+							</c:if>
+						</c:forEach></td>
+					<td>${orderDetail.quantity}</td>
 					<td><a
 						href="<c:url value='orderDetail/edit/${orderDetail.idOrderDetail}' />">Edit</a></td>
 					<td><a

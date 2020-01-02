@@ -60,7 +60,7 @@ public class OrderDetailController {
 			model.addAttribute("listOrderDetails", this.orderDetailService.listOrderDetails());
 			return "orderDetail";
 		}
-		if (o.getIdOrder() == null) {
+		if (o.getIdOrderDetail() == null) {
 			// new orderDetail, add it
 			this.orderDetailService.addOrderDetail(o);
 		} else {
